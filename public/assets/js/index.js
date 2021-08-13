@@ -182,16 +182,22 @@ if (window.location.pathname === '/notes') {
 
 getAndRenderNotes();
 
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-//express stuff
-let app = express();
-let port = process.env.PORT || 3000;
+// const express = require('express');
+// const path = require('path');
+// const fs = require('fs');
+// //express stuff
+// let app = express();
+// let port = process.env.PORT || 3000;
 
-//Stuff to route to notes.html when u click 'get started'
-app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/notes.html'))
-);
+// //Stuff to route to notes.html when u click 'get started'
+// app.get('/notes', (req, res) =>
+//   res.sendFile(path.join(__dirname, 'public/notes.html'))
+// );
 
-//
+// //more express stuff
+// app.use(express.urlencoded({ extended: true}));
+// app.use(express.json());
+// app.use(express.static("public"));
+// let notes = require("./db/db.json")
+
+// app.listen(PORT, () => console.log("App listening on PORT"+PORT));
