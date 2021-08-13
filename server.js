@@ -1,19 +1,17 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-// Where did this come from lol
-// const { allowedNodeEnvironmentFlags } = require('process');
+
 //express stuff
 let app = express();
 let PORT = process.env.PORT || 3001;
+const { v4: uuidv4 } = require('uuid');
 
 //middleware
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
 let notes = require("./db/db.json");
-// const { json } = require('express');
-//Stuff to route to notes.html when u click 'get started'
 
 //routing
 app.get('/notes', (req, res) =>
@@ -30,7 +28,7 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/notes', (req, res) => {
   let newNote = {
-    id: 69,
+    id: uuidv4(),
     title: req.body.title,
     text: req.body.text,
   };
@@ -48,6 +46,5 @@ app.post('/api/notes', (req, res) => {
   })
 })
 
-//more express stuff
-//running
+//run it
 app.listen(PORT, () => console.log("App listening on PORT http://localhost:" + PORT));
