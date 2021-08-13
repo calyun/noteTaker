@@ -13,11 +13,12 @@ app.use(express.json());
 app.use(express.static("public"));
 let notes = require("./db/db.json");
 
-//routing
+//route to notes page
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, 'public/notes.html'))
 );
 
+//route to displat notes
 app.get('/api/notes', (req, res) => {
     fs.readFile("./db/db.json", (err, data) => {
         if(err) throw err;
@@ -26,6 +27,7 @@ app.get('/api/notes', (req, res) => {
     })
 })
 
+// Route to save a note
 app.post('/api/notes', (req, res) => {
   let newNote = {
     id: uuidv4(),
@@ -46,6 +48,7 @@ app.post('/api/notes', (req, res) => {
   })
 })
 
+//Catch all route
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
