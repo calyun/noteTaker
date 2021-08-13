@@ -34,19 +34,35 @@ app.post('/api/notes', (req, res) => {
     title: req.body.title,
     text: req.body.text,
   };
-  console.log("this is newNote "+newNote);
   notes.push(newNote);
-  console.log("this is notes "+notes)
   const notesString = JSON.stringify(notes);
-  console.log("this is notesString "+notesString)
   res.json(notes);
   fs.writeFile("./db/db.json", notesString, (err) =>{
     if(err) throw err;
     else {
-      console.log("ya did it");
+      console.log("Note Saved");
     }
   })
 })
+
+//delete route
+app.delete("/api/notes/:id", (req, res) => {
+  let noteID = req.params.id;
+  fs.readFile("db/db.json", (err, data) => {
+    let updatedNotes = JSON.parse(data).filter((note) => {
+      return note.id !== noteID;
+    });
+    notes = updatedNotes;
+    const noteString = JSON.stringify(updatedNotes);
+    fs.writeFile("db/db.json", noteString, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("Note deleted");
+      }
+    });
+    res.json(noteString);
+  });
+});
 
 //Catch all route
 app.get('*', (req, res) => {
